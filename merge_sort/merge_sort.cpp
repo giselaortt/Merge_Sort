@@ -12,7 +12,7 @@ typedef list<int>::iterator NODE;
 list<int> merge_two_sorted_linked_lists( list<int> first, list<int> second ){
     list<int>::iterator it_first = first.begin(), it_second = second.begin();
     list<int> answer;
-    while( it_first != first.begin() || it_second != second.end() ){
+    while( it_first != first.end() or it_second != second.end() ){
         if( ( it_second == second.end() ) || ( it_first != first.end() && *it_first < *it_second) ){
             answer.push_back( *it_first );
             it_first++;
@@ -26,19 +26,21 @@ list<int> merge_two_sorted_linked_lists( list<int> first, list<int> second ){
 
 
 list<int> merge_sort( list<int> numbers ){
-
     int n = numbers.size();
+    int i;
+    list<int> temp_list_1, temp_list_2;
+    list<int>::iterator it;
+
     if( n == 1 )
         return numbers;
-    list<int> temp_list_1, temp_list_2;
-    int i;
-    list<int>::iterator it;
+
     for( i=0, it = numbers.begin(); it != numbers.end(); i++, it++ ){
         if( i<n/2 )
             temp_list_1.push_back( *it );
         else
             temp_list_2.push_back( *it );
     }
+
     temp_list_1 = merge_sort( temp_list_1 );
     temp_list_2 = merge_sort( temp_list_2 );
     numbers.clear();
@@ -54,20 +56,19 @@ int main(){
     int value;
     cin >> size_of_array;
 
-    list<int> numbers;
+    list<int> numbers= {0,1,2,3};
+    numbers.clear();
 
-    
     for( int i=0; i<size_of_array; i++ )
         cin >> value,
         numbers.push_back( value );
 
-    merge_sort( numbers );
+    numbers = merge_sort( numbers );
 
     for( auto it = numbers.begin(); it != numbers.end(); it++ )
         cout << *it << "  ";
 
     cout << endl;
-    
 
 return 0;
 }
